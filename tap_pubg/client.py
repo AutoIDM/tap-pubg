@@ -14,16 +14,13 @@ from singer_sdk.authenticators import APIKeyAuthenticator
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 
-class pubgStream(RESTStream):
+class PubgStream(RESTStream):
     """pubg stream class."""
 
-    url_base = "https://api.mysample.com"
-
-    # OR use a dynamic url_base:
-    # @property
-    # def url_base(self) -> str:
-    #     """Return the API URL root, configurable via tap settings."""
-    #     return self.config["api_url"]
+    @property
+    def url_base(self) -> str:
+        """Return the API URL root, configurable via tap settings."""
+        return "https://api.pubg.com/shards/"+self.config["platform"]
 
     records_jsonpath = "$[*]"  # Or override `parse_response`.
     next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
@@ -33,8 +30,8 @@ class pubgStream(RESTStream):
         """Return a new authenticator object."""
         return APIKeyAuthenticator.create_for_stream(
             self,
-            key="x-api-key",
-            value=self.config.get("api_key"),
+            key="Authorization",
+            value="Bearer " + self.config.get("api_key"),
             location="header"
         )
 
@@ -44,6 +41,7 @@ class pubgStream(RESTStream):
         headers = {}
         if "user_agent" in self.config:
             headers["User-Agent"] = self.config.get("user_agent")
+        headers["Accept"]="application/vnd.api+json"
         # If not using an authenticator, you may also provide inline auth headers:
         # headers["Private-Token"] = self.config.get("auth_token")
         return headers
