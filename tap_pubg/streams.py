@@ -24,3 +24,35 @@ class PlayersStream(PubgStream):
     def path(self):
         path = "/players?filter[playerNames]="+",".join(self.config["player_names"])
         return path
+
+
+class PlayerMatches(PlayersStream):
+    name = "player_matches"
+    primary_keys = ["id"]
+    replication_key = None
+    schema_filepath = SCHEMAS_DIR / "match.json"
+    records_jsonpath = "$.data[0].relationships.matches.data[*]"
+
+    @property
+    def path(self):
+        path = "/players?filter[playerNames]="+",".join(self.config["player_names"])
+        return path
+
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        """Return a context dictionary for child streams."""
+        return {
+            "match_id": record["id"],
+        }
+
+
+
+class TelemetryStream(PubgStream):
+    "Telemetry data"
+    name = "telemetry" 
+    primary_keys = ["id"]
+    replication_key = None
+    schema_filepath = SCHEMAS_DIR / "telemetry.json"
+    path = "/matches/{match_id}"
+
+    parent_stream_type = PlayerMatches
+
