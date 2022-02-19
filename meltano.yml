@@ -1,6 +1,7 @@
 version: 1
 send_anonymous_usage_stats: true
 project_id: 83928da7-1a61-41e9-8929-fa2acdc6d02b
+elt.buffer_size: 52428800
 plugins:
   extractors:
   - name: tap-pubg
