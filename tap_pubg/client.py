@@ -16,7 +16,7 @@ SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 class PubgStream(RESTStream):
     """pubg stream class."""
-
+    _LOG_REQUEST_METRIC_URLS=True
     @property
     def url_base(self) -> str:
         """Return the API URL root, configurable via tap settings."""
@@ -71,9 +71,6 @@ class PubgStream(RESTStream):
         params: dict = {}
         if next_page_token:
             params["page"] = next_page_token
-        if self.replication_key:
-            params["sort"] = "asc"
-            params["order_by"] = self.replication_key
         return params
 
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
