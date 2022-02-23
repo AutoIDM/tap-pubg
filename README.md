@@ -1,16 +1,33 @@
-# tap-pubg
+# `tap-pubg`
 
-`tap-pubg` is a Singer tap for pubg.
+pubg tap class.
 
-Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
+Built with the [Meltano SDK](https://sdk.meltano.com) for Singer Taps and Targets.
 
-## Installation
+## Capabilities
 
-- [ ] `Developer TODO:` Update the below as needed to correctly describe the install procedure. For instance, if you do not have a PyPi repo, or if you want users to directly install from your git repo, you can modify this step as appropriate.
+* `catalog`
+* `state`
+* `discover`
+* `about`
+* `stream-maps`
+* `schema-flattening`
 
-```bash
-pipx install tap-pubg
-```
+## Settings
+
+| Setting             | Required | Default | Description |
+|:--------------------|:--------:|:-------:|:------------|
+| api_key             | True     | None    | The token to authenticate against the API service |
+| player_names        | True     | None    | Player Names sepearted by commas that you'd like to pull, maximum of 10 |
+| platform            | True     | None    | platform, ie steam |
+| stream_maps         | False    | None    | Config object for stream maps capability. |
+| stream_map_config   | False    | None    | User-defined config values to be used within map expressions. |
+| flattening_enabled  | False    | None    | 'True' to enable schema flattening and automatically expand nested properties. |
+| flattening_max_depth| False    | None    | The max depth to flatten schemas. |
+
+A full list of supported settings and capabilities is available by running: `tap-pubg --about`
+
+
 
 ## Configuration
 

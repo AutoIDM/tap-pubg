@@ -4,6 +4,10 @@
         "URL": {
             "type": "string"
         },
+        "createdAt": {
+            "type": "string",
+            "format": "date-time"
+        },
         "data":{
             "type": "array",
             "items": {

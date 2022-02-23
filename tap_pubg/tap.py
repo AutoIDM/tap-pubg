@@ -9,13 +9,13 @@ from tap_pubg.streams import (
     PlayersStream,
     PlayerMatches,
     MatchesStream,
-    TelemetryStream,
+#    TelemetryStream,
 )
 STREAM_TYPES = [
     PlayersStream,
     PlayerMatches,
-    TelemetryStream,
     MatchesStream,
+#    TelemetryStream,
 ]
 
 
@@ -34,7 +34,7 @@ class Tappubg(Tap):
             "player_names",
             th.ArrayType(th.StringType),
             required=True,
-            description="Player Names you'd like to pull"
+            description="Player Names sepearted by commas that you'd like to pull, maximum of 10"
         ),
         th.Property(
             "platform",
